@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星辰科技 - 企业展示</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Header / Nav */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            transition: box-shadow 0.3s;
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            height: 72px;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--dark);
+            transition: 0.3s;
+        }
+
+        /* Sections */
+        .section {
+            min-height: 100vh;
+            padding: 120px 2rem 4rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            min-height: calc(100vh - 72px);
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            max-width: 520px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-stat h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hero-stat p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--border);
+            color: var(--dark);
+            background: transparent;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hero-visual {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, var(--primary), #6366f1);
+            border-radius: 24px;
+            padding: 3rem;
+            color: white;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+        }
+
+        .hero-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero-card ul {
+            list-style: none;
+            position: relative;
+        }
+
+        .hero-card li {
+            padding: 8px 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .hero-card li::before {
+            content: '-> ';
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            background: var(--primary-light);
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .about-image-inner {
+            text-align: center;
+        }
+
+        .about-image-inner .icon-lg {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-image-inner p {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-desc {
+            color: var(--gray);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-list h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .feature-list p {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-light);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-link {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .service-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-info-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .contact-info-item h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .contact-info-item p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .contact-form {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer h4 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .footer p,
+        .footer a {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1.5rem 2rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header" id="header">
+    <nav class="nav">
+        <a href="#home" class="nav-logo">星辰<span>科技</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="active">首页</a></li>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#services">产品/服务</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="菜单">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+</header>
+
+<!-- 首页 -->
+<section class="section" id="home">
+    <div class="container hero">
+        <div class="hero-content">
+            <span class="hero-badge">领先的企业数字化解决方案</span>
+            <h1>用<span>智能科技</span>驱动企业未来</h1>
+            <p>星辰科技致力于为企业提供全方位的数字化转型服务，涵盖云计算、人工智能、物联网等前沿领域，助力企业降本增效，实现可持续发展。</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <h3>500+</h3>
+                    <p>服务企业客户</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>98%</h3>
+                    <p>客户满意度</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>50+</h3>
+                    <p>技术专利</p>
+                </div>
+            </div>
+            <a href="#contact" class="btn btn-primary">立即咨询</a>
+            <a href="#services" class="btn btn-outline">了解服务</a>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <h3>核心能力</h3>
+                <ul>
+                    <li>云计算与数据中心建设</li>
+                    <li>AI 智能决策平台</li>
+                    <li>物联网设备管理</li>
+                    <li>企业级安全解决方案</li>
+                    <li>数据中台与可视化</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 关于我们 -->
+<section class="section" id="about">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-image">
+                <div class="about-image-inner">
+                    <div class="icon-lg">🏢</div>
+                    <p>星辰科技总部 · 北京</p>
+                </div>
+            </div>
+            <div>
+                <span class="section-label">关于我们</span>
+                <h2 class="section-title">以技术创新引领行业变革</h2>
+                <p class="section-desc">成立于2015年，星辰科技始终专注于企业级技术服务的研发与交付。我们汇聚了来自全球顶尖科技公司的技术人才，深耕云计算、人工智能和物联网三大核心领域。</p>
+                <ul class="feature-list">
+                    <li>
+                        <div class="feature-icon">💡</div>
+                        <div>
+                            <h4>技术驱动创新</h4>
+                            <p>持续投入研发，拥有多项核心技术专利和软件著作权。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🤝</div>
+                        <div>
+                            <h4>客户至上理念</h4>
+                            <p>以客户成功为己任，提供7x24小时专业技术支持服务。</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🌍</div>
+                        <div>
+                            <h4>全国服务网络</h4>
+                            <p>在北京、上海、深圳、成都设有分支机构，覆盖全国客户。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 产品/服务 -->
+<section class="section" id="services" style="background: var(--light);">
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <span class="section-label">产品 / 服务</span>
+            <h2 class="section-title">全方位企业数字化解决方案</h2>
+            <p class="section-desc" style="max-width: 600px; margin: 0 auto;">我们提供从咨询规划到落地实施的一站式服务，覆盖企业数字化转型的各个关键环节。</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">☁️</div>
+                <h3>云计算平台</h3>
+                <p>提供弹性可扩展的云基础设施服务，包括私有云部署、混合云架构设计及运维托管，帮助企业快速上云。</p>
+                <a href="#" class="service-link">了解更多 &rarr;</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI 智能应用</h3>
+                <p>基于深度学习与自然语言处理技术，打造智能客服、智能推荐、风险预测等企业级AI应用解决方案。</p>
+                <a href="#" class="service-link">了解更多 &rarr;</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📡</div>
+                <h3>物联网方案</h3>
+                <p>从设备接入到数据采集，提供完整的IoT平台服务，支持工业物联网、智慧园区、智能家居等场景。</p>
+                <a href="#" class="service-link">了解更多 &rarr;</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔒</div>
+                <h3>安全服务</h3>
+                <p>提供安全评估、渗透测试、数据加密、合规咨询等全方位信息安全服务，保障企业数据资产安全。</p>
+                <a href="#" class="service-link">了解更多 &rarr;</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>数据中台</h3>
+                <p>构建企业级数据中台，打通数据孤岛，实现数据资产化、可视化分析及智能决策支持。</p>
+                <a href="#" class="service-link">了解更多 &rarr;</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>敏捷开发</h3>
+                <p>基于微服务架构和DevOps理念，为企业提供定制化软件开发和系统集成服务，快速响应业务需求。</p>
+                <a href="#" class="service-link">了解更多 &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 联系我们 -->
+<section class="section" id="contact">
+    <div class="container">
+        <div class="contact-grid">
+            <div>
+                <span class="section-label">联系我们</span>
+                <h2 class="section-title">开启数字化转型之旅</h2>
+                <p class="section-desc">无论您处于数字化转型的哪个阶段，我们的专家团队都将为您提供专业的咨询与技术支持。</p>
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">📍</div>
+                    <div>
+                        <h4>总部地址</h4>
+                        <p>北京市海淀区中关村科技园区 星辰大厦 18层</p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">📞</div>
+                    <div>
+                        <h4>联系电话</h4>
+                        <p>400-888-9999</p>
+                    </div>
+                </div>
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">📧</div>
+                    <div>
+                        <h4>电子邮箱</h4>
+                        <p>contact@xingchen-tech.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.25rem;">发送咨询</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" placeholder="请输入您的邮箱地址" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">公司</label>
+                        <input type="text" id="company" placeholder="请输入您的公司名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">咨询内容</label>
+                        <textarea id="message" placeholder="请描述您的需求或问题..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">提交咨询</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-logo">星辰<span style="color: var(--accent);">科技</span></div>
+            <p>专注于企业数字化转型，以技术创新驱动商业价值，助力企业实现智能化升级。</p>
+        </div>
+        <div>
+            <h4>服务</h4>
+            <a href="#">云计算</a>
+            <a href="#">AI 智能</a>
+            <a href="#">物联网</a>
+            <a href="#">安全服务</a>
+        </div>
+        <div>
+            <h4>公司</h4>
+            <a href="#">关于我们</a>
+            <a href="#">新闻动态</a>
+            <a href="#">加入我们</a>
+            <a href="#">合作伙伴</a>
+        </div>
+        <div>
+            <h4>支持</h4>
+            <a href="#">帮助中心</a>
+            <a href="#">文档中心</a>
+            <a href="#">社区论坛</a>
+            <a href="#">联系我们</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2024 星辰科技 Xingchen Tech. All rights reserved.
+    </div>
+</footer>
+
+<script>
+    // 导航滚动效果
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // 导航活跃状态更新
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    function updateActiveLink() {
+        let current = '';
+        sections.forEach(section => {
+            const top = section.offsetTop - 100;
+            if (window.scrollY >= top) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+
+    // 移动端导航切换
+    const navToggle = document.getElementById('navToggle');
+    const navLinksEl = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+        navLinksEl.classList.toggle('active');
+    });
+
+    navLinksEl.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinksEl.classList.remove('active');
+        });
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 表单提交
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('button');
+        const originalText = btn.textContent;
+        btn.textContent = '已提交，感谢您的咨询！';
+        btn.style.background = '#16a34a';
+        btn.disabled = true;
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+            btn.disabled = false;
+            this.reset();
+        }, 3000);
+    });
+</script>
+
+</body>
+</html>
